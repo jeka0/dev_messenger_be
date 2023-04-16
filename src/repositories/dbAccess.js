@@ -11,6 +11,8 @@ const AppDataSource = new typeorm.DataSource({
     entities: [
         require("../entity/User.js"),
         require("../entity/Post.js"),
+        require("../entity/Message.js"),
+        require("../entity/Chat.js"),
         require("../entity/Community.js")
     ],
     migrations: ["migration/**/*.js"],
