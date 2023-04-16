@@ -1,9 +1,10 @@
 const postAccess = require("../repositories/postAccess");
 const { getUserByID } = require("./userService");
+const { getCommunityByID } = require("./communityService");
 const { deleteFile } = require("../helpers/fs");
-async function createPost(userId, data){
+async function createPost(communityId, data){
     data.datetime = new Date();
-    data.user = await getUserByID(userId);
+    data.community = await getCommunityByID(communityId);
 
     const post = await postAccess.createPost(data)
 
@@ -35,8 +36,8 @@ async function getAllPosts()
     return posts;
 }
 
-async function getUserPosts(id){
-    const posts = await postAccess.getUserPosts(id)
+async function getCommunityPosts(id){
+    const posts = await postAccess.getCommunityPosts(id)
 
     posts.forEach(deleteInfo);
 
@@ -86,9 +87,9 @@ async function pagination(page, limit){
     return result;
 }
 
-async function paginationUser(userId, page, limit){
+async function paginationCommunity(communityId, page, limit){
     const skip= (page-1) * limit;
-    const result = await postAccess.getUserRange(userId, skip, limit);
+    const result = await postAccess.getCommunityRange(communityId, skip, limit);
 
     result.data.forEach(deleteInfo);
 
@@ -130,7 +131,7 @@ async function deleteUserLike(id, userId){
 }
 
 function deleteInfo(post){
-    delete post.user.password;
+    //delete post.user.password;
     post.likes.forEach((user, index)=>{post.likes[index] = {id:user.id}})
 }
 
@@ -138,11 +139,11 @@ module.exports = {
     createPost, 
     getPost, 
     getAllPosts, 
-    getUserPosts, 
+    getCommunityPosts, 
     updatePost, 
     deletePost,
     pagination,
-    paginationUser,
+    paginationCommunity,
     addUserLike,
     deleteUserLike
 };

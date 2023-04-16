@@ -8,6 +8,7 @@ const id = {
 
 const create = {
     [Segments.BODY]: Joi.object().keys({
+        communityId: Joi.number().required(),
         message: Joi.string(),
         image: Joi.string().required()
     }).required().min(1)

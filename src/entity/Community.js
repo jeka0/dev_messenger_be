@@ -1,35 +1,27 @@
 const EntitySchema = require('typeorm').EntitySchema
 module.exports = new EntitySchema({
-    name: "Post",
+    name: "Community",
     columns: {
         id: {
             primary: true,
             type: "int",
             generated: true 
         },
-        message: {
+        name: {
             type: "text",
-            nullable: true
-        },
-        datetime: {
-            type: "date"
+            unique: true
         },
         image: {
-            type: "text"
+            type: "text",
+            nullable: true
         }
     },
     relations: {
-        community: {
-            target: "Community",
-            type: "many-to-one",
-            joinTable: true,
-            cascade: true,
-        },
-        likes: {
+        users: {
             target: "User",
             type: "many-to-many",
             joinTable: true,
             cascade: true,
-        },
+        }
     },
 })

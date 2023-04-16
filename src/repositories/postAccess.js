@@ -7,7 +7,7 @@ async function createPost(post){
 
 async function getAllPosts(){
     return await postRep.find({
-         relations:['user', 'likes'],
+         relations:['community', 'likes'],
          order: {id: 'DESC'}
     });
 }
@@ -17,18 +17,18 @@ async function getPost(id){
         where:{
             id 
         }, 
-        relations:['user', 'likes'] 
+        relations:['community', 'likes'] 
     });
 }
 
-async function getUserPosts(userId){
+async function getCommunityPosts(communityId){
     return await postRep.find({
         where:{
-            user:{
-                id:userId
+            community:{
+                id:communityId
             }
         },
-        relations:['user', 'likes'],
+        relations:['community', 'likes'],
         order: {id: 'DESC'}
     });
 }
@@ -49,7 +49,7 @@ async function getRange(skip, take){
     const [result, total] = await postRep.findAndCount({ 
         skip,
         take,
-        relations:['user', 'likes'],
+        relations:['community', 'likes'],
         order: {id: 'DESC'}
     });
 
@@ -59,16 +59,16 @@ async function getRange(skip, take){
     }
 }
 
-async function getUserRange(userId, skip, take){
+async function getCommunityRange(communityId, skip, take){
     const [result, total] = await postRep.findAndCount({ 
         skip,
         take,
         where:{
-            user:{
-                id:userId
+            community:{
+                id:communityId
             }
         },
-        relations:['user', 'likes'],
+        relations:['community', 'likes'],
         order: {id: 'DESC'}
     });
 
@@ -82,9 +82,9 @@ module.exports = {
     createPost, 
     getPost, 
     getAllPosts, 
-    getUserPosts, 
+    getCommunityPosts, 
     updatePost, 
     deletePost,
     getRange,
-    getUserRange
+    getCommunityRange
 };
