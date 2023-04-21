@@ -12,6 +12,18 @@ async function getAllMessages(){
     });
 }
 
+async function getAllMessagesByChat(chatId){
+    return await messageRep.find({
+        where:{
+            chat:{
+                id: chatId
+            }
+        }, 
+        relations:['user', 'chat'],
+        order: {datetime: 'DESC'}
+   });
+}
+
 async function getMessage(id){
     return await messageRep.findOne({
         where:{
@@ -49,7 +61,8 @@ async function getRange(skip, take){
 }
 
 module.exports = {
-    createMessage, 
+    createMessage,
+    getAllMessagesByChat,
     getMessage, 
     getAllMessages, 
     updateMessage, 

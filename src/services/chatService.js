@@ -8,7 +8,7 @@ async function createChat(chat){
         }
     }
 
-    chatAccess.createChat(chat);
+    return chatAccess.createChat(chat);
  }
  
  async function getAllChats(){

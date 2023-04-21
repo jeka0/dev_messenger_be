@@ -22,6 +22,12 @@ module.exports = new EntitySchema({
             type: "many-to-many",
             joinTable: true,
             cascade: true,
+        },
+        post: {
+            target: "Post",
+            type: "one-to-one",
+            joinTable: true,
+            mappedBy: 'chat',
         }
     },
 })

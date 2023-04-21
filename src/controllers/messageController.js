@@ -14,6 +14,14 @@ async function getAllMessages(req, res){
     .catch((err)=>res.status(400).send(err.message));
 }
 
+async function getAllMessagesByChat(req, res){
+    const { id } = req.params;
+
+    messageSevice.getAllMessagesByChat(id)
+    .then((Messages)=>res.send(Messages))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
 async function updateMessage(req, res){
     const { id } = req.params;
     const { message } = req.body;
@@ -42,7 +50,8 @@ async function getRange(req, res){
 }
 
 module.exports = { 
-    getMessage, 
+    getMessage,
+    getAllMessagesByChat,
     getAllMessages, 
     updateMessage, 
     deleteMessage,

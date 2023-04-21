@@ -1,10 +1,14 @@
 const postAccess = require("../repositories/postAccess");
 const { getUserByID } = require("./userService");
+const { getHesh } = require("../helpers/encrypt");
 const { getCommunityByID } = require("./communityService");
 const { deleteFile } = require("../helpers/fs");
+const { createChat } = require("./chatService");
 async function createPost(communityId, data){
     data.datetime = new Date();
     data.community = await getCommunityByID(communityId);
+    const name = await getHesh(data.datetime.toString())
+    data.chat = await createChat({ name });
 
     const post = await postAccess.createPost(data)
 

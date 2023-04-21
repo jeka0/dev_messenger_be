@@ -1,8 +1,10 @@
 const messageAccess = require("../repositories/messageAccess");
 const { getUserByID } = require("./userService");
-async function createMessage(userId, data){
+const { getChatByID } = require("./chatService");
+async function createMessage(userId, chatId, data){
     data.datetime = new Date();
     data.user = await getUserByID(userId);
+    data.chat = await getChatByID(chatId);
 
     const message = await messageAccess.createMessage(data)
 
@@ -29,6 +31,14 @@ async function getMessage(id){
 async function getAllMessages()
 {
     const messages = await messageAccess.getAllMessages()
+
+    messages.forEach(deleteInfo);
+
+    return messages;
+}
+
+async function getAllMessagesByChat(chatId){
+    const messages = await messageAccess.getAllMessagesByChat(chatId);
 
     messages.forEach(deleteInfo);
 
@@ -84,6 +94,7 @@ function deleteInfo(message){
 
 module.exports = {
     createMessage,
+    getAllMessagesByChat,
     getMessage,
     getAllMessages,
     updateMessage,

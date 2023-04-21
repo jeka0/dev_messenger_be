@@ -11,23 +11,31 @@ const io = require("socket.io")(server, {
 io.use(checkSocketAuth);
 
 io.on('connection', client => {
-  client.on("message", ({ message }) =>{
-    createMessage(client.userId, { message }).then((savedMessage)=>{
-        io.emit("message", savedMessage);
+  client.on("message", ({ chatId, message }) =>{
+    createMessage(client.userId, chatId, {message} ).then((savedMessage)=>{
+      io.to(chatId).emit("message", savedMessage);
     })
   });
 
-  client.on("update", ({ message, id }) =>{
+  client.on('join', (chatId) => {
+    client.join(chatId);
+  });
+
+  client.on('leave', (chatId)=>{
+    client.leave(chatId);
+  });
+
+  client.on("update", ({ chatId, message, id }) =>{
     updateMessage(id, client.userId, { message }).then((updatedMessage)=>{
-      io.emit("update", updatedMessage);
+      io.to(chatId).emit("update", updatedMessage);
     }).catch(err=>{
       client.emit("error", err);
     });
   });
 
-  client.on("delete", (id) =>{
+  client.on("delete", ({chatId, id}) =>{
     deleteMessage(id, client.userId).then(()=>{
-        io.emit("delete", id);
+      io.to(chatId).emit("delete", id);
     }).catch(err=>{
       client.emit("error", err);
     })

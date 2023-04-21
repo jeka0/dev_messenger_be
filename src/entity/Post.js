@@ -31,5 +31,16 @@ module.exports = new EntitySchema({
             joinTable: true,
             cascade: true,
         },
+        chat: {
+            target: "Chat",
+            type: "one-to-one",
+            joinTable: true,
+            cascade: true,
+            inverseSide: 'post',
+            joinColumn: {
+                name: 'chat_id',
+                referencedColumnName: 'id',
+            }
+        }
     },
 })

@@ -7,7 +7,7 @@ async function createPost(post){
 
 async function getAllPosts(){
     return await postRep.find({
-         relations:['community', 'likes'],
+         relations:['community', 'likes', 'chat'],
          order: {id: 'DESC'}
     });
 }
@@ -17,7 +17,7 @@ async function getPost(id){
         where:{
             id 
         }, 
-        relations:['community', 'likes'] 
+        relations:['community', 'likes', 'chat'] 
     });
 }
 
@@ -28,7 +28,7 @@ async function getCommunityPosts(communityId){
                 id:communityId
             }
         },
-        relations:['community', 'likes'],
+        relations:['community', 'likes', 'chat'],
         order: {id: 'DESC'}
     });
 }
@@ -49,7 +49,7 @@ async function getRange(skip, take){
     const [result, total] = await postRep.findAndCount({ 
         skip,
         take,
-        relations:['community', 'likes'],
+        relations:['community', 'likes', 'chat'],
         order: {id: 'DESC'}
     });
 
@@ -68,7 +68,7 @@ async function getCommunityRange(communityId, skip, take){
                 id:communityId
             }
         },
-        relations:['community', 'likes'],
+        relations:['community', 'likes', 'chat'],
         order: {id: 'DESC'}
     });
 
