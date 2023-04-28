@@ -6,15 +6,27 @@ async function createChat(chat){
 }
 
 async function getAllChats(){
-    return await chatRep.find()
+    return await chatRep.find({
+        relations:['users'] 
+    })
 }
 
 async function getChatByID(id){
-    return await chatRep.findOneBy({ id })
+    return await chatRep.findOne({
+        where:{
+            id 
+        }, 
+        relations:['users'] 
+    })
 }
 
 async function getChatByName(name){
-    return await chatRep.findOneBy({ name })
+    return await chatRep.findOne({
+        where:{
+            name
+        }, 
+        relations:['users'] 
+    })
 }
 
 async function deleteChat(id){

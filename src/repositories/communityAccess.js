@@ -6,15 +6,27 @@ async function createCommunity(community){
 }
 
 async function getAllCommunitys(){
-    return await communityRep.find()
+    return await communityRep.find({
+        relations:['users'] 
+    })
 }
 
 async function getCommunityByID(id){
-    return await communityRep.findOneBy({ id })
+    return await communityRep.findOne({
+        where:{
+            id 
+        }, 
+        relations:['users'] 
+    })
 }
 
 async function getCommunityByName(name){
-    return await communityRep.findOneBy({ name })
+    return await communityRep.findOne({
+        where:{
+            name
+        }, 
+        relations:['users'] 
+    })
 }
 
 async function deleteCommunity(id){

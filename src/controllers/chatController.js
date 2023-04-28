@@ -48,11 +48,31 @@ async function getChatByName(req, res){
     .catch((err)=>res.status(400).send(err.message));
 }
 
+async function joinUser(req, res){
+    const { id } = req.params;
+    const userId = req.userId;
+
+    chatService.joinUser(id, userId)
+    .then((result)=>res.send(result))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
+async function leaveUser(req, res){
+    const { id } = req.params;
+    const userId = req.userId;
+
+    chatService.leaveUser(id, userId)
+    .then((result)=>res.send(result))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
 module.exports = {
     createChat,
     getAllChats,
     deleteChat,
     updateChat,
     getChat,
-    getChatByName
+    getChatByName,
+    joinUser,
+    leaveUser
 };

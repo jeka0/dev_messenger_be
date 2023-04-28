@@ -24,6 +24,7 @@ module.exports = new EntitySchema({
             type: "many-to-one",
             joinTable: true,
             cascade: true,
+            onDelete: "cascade"
         },
         likes: {
             target: "User",
@@ -35,8 +36,7 @@ module.exports = new EntitySchema({
             target: "Chat",
             type: "one-to-one",
             joinTable: true,
-            cascade: true,
-            inverseSide: 'post',
+            mappedBy: 'post',
             joinColumn: {
                 name: 'chat_id',
                 referencedColumnName: 'id',

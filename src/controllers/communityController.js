@@ -48,11 +48,31 @@ async function getCommunityByName(req, res){
     .catch((err)=>res.status(400).send(err.message));
 }
 
+async function joinUser(req, res){
+    const { id } = req.params;
+    const userId = req.userId;
+
+    communityService.joinUser(id, userId)
+    .then((result)=>res.send(result))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
+async function leaveUser(req, res){
+    const { id } = req.params;
+    const userId = req.userId;
+
+    communityService.leaveUser(id, userId)
+    .then((result)=>res.send(result))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
 module.exports = {
     createCommunity,
     getAllCommunitys,
     deleteCommunity,
     updateCommunity,
     getCommunity,
-    getCommunityByName
+    getCommunityByName,
+    joinUser,
+    leaveUser
 };

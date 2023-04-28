@@ -3,14 +3,16 @@ const { getUserByID } = require("./userService");
 const { getHesh } = require("../helpers/encrypt");
 const { getCommunityByID } = require("./communityService");
 const { deleteFile } = require("../helpers/fs");
-const { createChat } = require("./chatService");
+const { createChat, updateChat } = require("./chatService");
 async function createPost(communityId, data){
     data.datetime = new Date();
     data.community = await getCommunityByID(communityId);
-    const name = await getHesh(data.datetime.toString())
+    const name = await getHesh(data.datetime.toString());
     data.chat = await createChat({ name });
 
-    const post = await postAccess.createPost(data)
+    const post = await postAccess.createPost(data);
+
+    await updateChat( data.chat.id,{ post });
 
     if(!post){
         throw new Error("Error creating post");
@@ -68,9 +70,9 @@ async function updatePost(id, userId, data){
 async function deletePost(id, userId){
     const post = await postAccess.getPost(id);
 
-    if(post.user.id !== userId){
+    /*if(post.user.id !== userId){
         throw new Error("Access denied");
-    }
+    }*/
 
     deleteFile(post.image);
     const deletedPost = await postAccess.deletePost(id);
@@ -135,7 +137,6 @@ async function deleteUserLike(id, userId){
 }
 
 function deleteInfo(post){
-    //delete post.user.password;
     post.likes.forEach((user, index)=>{post.likes[index] = {id:user.id}})
 }
 
