@@ -40,8 +40,17 @@ async function getCurrentUser(req, res){
     }).catch((err)=>res.status(400).send(err.message));
 }
 
+async function searchUser(req, res){
+    const { name } = req.body;
+
+    userService.searchUser(name)
+    .then((results)=>res.send(results))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
 module.exports = {
     getCurrentUser,
+    searchUser,
     getUser,
     updateUser,
     deleteUser

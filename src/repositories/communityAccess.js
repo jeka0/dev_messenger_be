@@ -1,4 +1,5 @@
 const dbAccess = require("./dbAccess.js")
+const { ILike } = require("typeorm");
 const communityRep = dbAccess.AppDataSource.getRepository("Community");
 
 async function createCommunity(community){
@@ -20,12 +21,32 @@ async function getCommunityByID(id){
     })
 }
 
+async function getUserCommunitys(userId){
+    return await communityRep.find({
+        where:{
+            users:{
+                id: userId
+            }
+        }, 
+        relations:['users'] 
+
+    })
+}
+
 async function getCommunityByName(name){
     return await communityRep.findOne({
         where:{
             name
         }, 
         relations:['users'] 
+    })
+}
+
+async function searchCommunity(text){
+    return await communityRep.find({
+        where:{
+            name: ILike(`%${text}%`)
+        }
     })
 }
 
@@ -40,8 +61,10 @@ async function updateCommunity(id, data){
 module.exports = {
     createCommunity,
     getAllCommunitys,
+    getUserCommunitys,
     getCommunityByID,
     getCommunityByName,
     deleteCommunity,
-    updateCommunity
+    updateCommunity,
+    searchCommunity
 };

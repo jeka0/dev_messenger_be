@@ -16,6 +16,22 @@ async function getAllCommunitys(req, res){
     .catch((err)=>res.status(400).send(err.message));
 }
 
+async function getUserCommunitys(req, res){
+    const userId = req.userId;
+
+    communityService.getUserCommunitys(userId)
+    .then((communitys)=>res.send(communitys))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
+async function searchCommunity(req, res){
+    const { name } = req.body;
+
+    communityService.searchCommunity(name)
+    .then((communitys)=>res.send(communitys))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
 async function deleteCommunity(req, res){
     const { id } = req.params;
 
@@ -69,6 +85,8 @@ async function leaveUser(req, res){
 module.exports = {
     createCommunity,
     getAllCommunitys,
+    getUserCommunitys,
+    searchCommunity,
     deleteCommunity,
     updateCommunity,
     getCommunity,

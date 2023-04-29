@@ -1,5 +1,4 @@
 const communityAccess = require("../repositories/communityAccess");
-const { deleteChat } = require("./chatService");
 const { getUserByID } = require("./userService");
 const { deleteFile } = require("../helpers/fs");
 
@@ -19,6 +18,18 @@ async function createCommunity(community){
     communitys.forEach(community=>deleteInfo(community));
 
     return communitys;
+ }
+
+ async function getUserCommunitys(userId){
+  const communitys = await communityAccess.getUserCommunitys(userId);
+
+  communitys.forEach(community=>deleteInfo(community));
+
+  return communitys;
+}
+
+ async function searchCommunity(name){
+    return await communityAccess.searchCommunity(name);
  }
  
  async function getCommunityByID(id){
@@ -116,6 +127,8 @@ async function createCommunity(community){
  module.exports = {
     createCommunity,
     getAllCommunitys,
+    getUserCommunitys,
+    searchCommunity,
     getCommunityByID,
     getCommunityByName,
     deleteCommunity,

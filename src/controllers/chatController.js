@@ -16,6 +16,22 @@ async function getAllChats(req, res){
     .catch((err)=>res.status(400).send(err.message));
 }
 
+async function getUserChats(req, res){
+    const userId = req.userId;
+
+    chatService.getUserChats(userId)
+    .then((chat)=>res.send(chat))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
+async function searchChat(req, res){
+    const { name } = req.body;
+
+    chatService.searchChat(name)
+    .then((chat)=>res.send(chat))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
 async function deleteChat(req, res){
     const { id } = req.params;
 
@@ -69,6 +85,8 @@ async function leaveUser(req, res){
 module.exports = {
     createChat,
     getAllChats,
+    getUserChats,
+    searchChat,
     deleteChat,
     updateChat,
     getChat,

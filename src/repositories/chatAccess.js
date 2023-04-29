@@ -1,4 +1,5 @@
 const dbAccess = require("./dbAccess.js")
+const { ILike } = require("typeorm");
 const chatRep = dbAccess.AppDataSource.getRepository("Chat");
 
 async function createChat(chat){
@@ -20,12 +21,34 @@ async function getChatByID(id){
     })
 }
 
+
+async function getUserChats(userId){
+    return await chatRep.find({
+        where:{
+            users:{
+                id: userId
+            }
+        }, 
+        relations:['users'] 
+
+    })
+}
+
+
 async function getChatByName(name){
     return await chatRep.findOne({
         where:{
             name
         }, 
         relations:['users'] 
+    })
+}
+
+async function searchChat(text){
+    return await chatRep.find({
+        where:{
+            name: ILike(`%${text}%`)
+        }
     })
 }
 
@@ -40,6 +63,8 @@ async function updateChat(id, data){
 module.exports = {
     createChat,
     getAllChats,
+    getUserChats,
+    searchChat,
     getChatByID,
     getChatByName,
     deleteChat,

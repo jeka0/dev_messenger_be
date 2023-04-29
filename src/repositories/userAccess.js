@@ -1,4 +1,5 @@
 const dbAccess = require("./dbAccess.js")
+const { ILike } = require("typeorm");
 const userRep = dbAccess.AppDataSource.getRepository("User");
 
 async function createUser(user){
@@ -7,6 +8,14 @@ async function createUser(user){
 
 async function getAllUsers(){
     return await userRep.find()
+}
+
+async function searchUser(text){
+    return await userRep.find({
+        where:{
+            email: ILike(`%${text}%`)
+        }
+    })
 }
 
 async function getUserByID(id){
@@ -27,6 +36,7 @@ async function updateUser(id, data){
 
 module.exports = {
     createUser,
+    searchUser,
     getAllUsers,
     getUserByID,
     getUserByEmail,

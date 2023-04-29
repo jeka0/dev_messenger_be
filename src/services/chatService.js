@@ -13,8 +13,24 @@ async function createChat(chat){
  }
  
  async function getAllChats(){
-    return await chatAccess.getAllChats();
+    const chats = await chatAccess.getAllChats();
+
+    chats.forEach(chat=>deleteInfo(chat));
+
+    return chats;
  }
+
+ async function getUserChats(userId){
+  const chats = await chatAccess.getUserChats(userId);
+
+  chats.forEach(chat=>deleteInfo(chat));
+
+  return chats;
+}
+
+ async function searchChat(name){
+  return await chatAccess.searchChat(name);
+  }
  
  async function getChatByID(id){
     const chat = await chatAccess.getChatByID(id);
@@ -22,6 +38,8 @@ async function createChat(chat){
     if(!chat){
       throw new Error("Chat is not found");
     }
+
+    deleteInfo(chat);
 
     return chat;
  }
@@ -32,6 +50,8 @@ async function createChat(chat){
     if(!chat){
         throw new Error("Chat is not found");
       }
+
+      deleteInfo(chat)
   
       return chat;
  }
@@ -107,6 +127,8 @@ async function createChat(chat){
  module.exports = {
     createChat,
     getAllChats,
+    getUserChats,
+    searchChat,
     getChatByID,
     getChatByName,
     deleteChat,
