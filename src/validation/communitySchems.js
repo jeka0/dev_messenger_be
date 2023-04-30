@@ -9,6 +9,7 @@ const id = {
 const create = {
     [Segments.BODY]: Joi.object().keys({
         name: Joi.string().required(),
+        visibility: Joi.string().required(),
         image: Joi.string(),
     })
 }
@@ -22,6 +23,7 @@ const getByName = {
 const update = {
     [Segments.BODY]: Joi.object().keys({
         name: Joi.string(),
+        visibility: Joi.string(),
         image: Joi.string(),
     }).required().min(1),
 }

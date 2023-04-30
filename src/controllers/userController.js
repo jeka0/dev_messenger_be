@@ -40,6 +40,12 @@ async function getCurrentUser(req, res){
     }).catch((err)=>res.status(400).send(err.message));
 }
 
+async function getAllUsers(req, res){
+    userService.getAllUsers()
+    .then((results)=>res.send(results))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
 async function searchUser(req, res){
     const { name } = req.body;
 
@@ -49,6 +55,7 @@ async function searchUser(req, res){
 }
 
 module.exports = {
+    getAllUsers,
     getCurrentUser,
     searchUser,
     getUser,

@@ -14,6 +14,10 @@ module.exports = new EntitySchema({
         image: {
             type: "text",
             nullable: true
+        },
+        visibility: {
+            type: "text",
+            default: "public"
         }
     },
     relations: {

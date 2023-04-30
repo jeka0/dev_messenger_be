@@ -8,6 +8,9 @@ async function createChat(chat){
 
 async function getAllChats(){
     return await chatRep.find({
+        where:{
+            visibility: "public"
+        },
         relations:['users'] 
     })
 }
@@ -24,11 +27,20 @@ async function getChatByID(id){
 
 async function getUserChats(userId){
     return await chatRep.find({
-        where:{
-            users:{
-                id: userId
-            }
-        }, 
+        where:[
+            {
+                users:{
+                    id: userId
+                },
+                visibility: "public"
+            },
+            {
+                users:{
+                    id: userId
+                },
+                visibility: "private"
+            },
+        ], 
         relations:['users'] 
 
     })
@@ -47,7 +59,8 @@ async function getChatByName(name){
 async function searchChat(text){
     return await chatRep.find({
         where:{
-            name: ILike(`%${text}%`)
+            name: ILike(`%${text}%`),
+            visibility: "public"
         }
     })
 }

@@ -3,9 +3,9 @@ const communityService = require("../services/communityService");
 require('dotenv').config()
 
 async function createCommunity(req, res){
-    const { name, image } = req.body;
+    const { name, visibility, image } = req.body;
 
-    communityService.createCommunity({name, image})
+    communityService.createCommunity({name, visibility, image})
     .then(()=>res.send("OK"))
     .catch((err)=>res.status(400).send(err.message));
 }
@@ -41,10 +41,10 @@ async function deleteCommunity(req, res){
 }
 
 async function updateCommunity(req, res){
-    const { name, image } = req.body;
+    const { name, visibility, image } = req.body;
     const { id } = req.params;
 
-    communityService.updateCommunity(id, {name, image})
+    communityService.updateCommunity(id, {name, visibility, image})
     .then(()=>res.send("OK"))
     .catch((err)=>res.status(400).send(err.message));
 }

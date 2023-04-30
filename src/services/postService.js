@@ -8,7 +8,7 @@ async function createPost(communityId, data){
     data.datetime = new Date();
     data.community = await getCommunityByID(communityId);
     const name = await getHesh(data.datetime.toString());
-    data.chat = await createChat({ name });
+    data.chat = await createChat({ name, visibility: "hidden" });
 
     const post = await postAccess.createPost(data);
 

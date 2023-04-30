@@ -8,7 +8,9 @@ async function createUser(user){
  }
  
  async function getAllUsers(){
-    return await userAccess.getAllUsers();
+    const users = await userAccess.getAllUsers();
+    users.map(user=>delete user.password);
+    return users;
  }
 
  async function searchUser(email){

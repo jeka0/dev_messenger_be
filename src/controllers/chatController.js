@@ -3,9 +3,9 @@ const chatService = require("../services/chatService");
 require('dotenv').config()
 
 async function createChat(req, res){
-    const { name, image } = req.body;
+    const { name, image, visibility } = req.body;
 
-    chatService.createChat({name, image})
+    chatService.createChat({name, visibility, image})
     .then(()=>res.send("OK"))
     .catch((err)=>res.status(400).send(err.message));
 }
@@ -41,10 +41,10 @@ async function deleteChat(req, res){
 }
 
 async function updateChat(req, res){
-    const { name, image } = req.body;
+    const { name, visibility, image } = req.body;
     const { id } = req.params;
 
-    chatService.updateChat(id, {name, image})
+    chatService.updateChat(id, {name, visibility, image})
     .then(()=>res.send("OK"))
     .catch((err)=>res.status(400).send(err.message));
 }

@@ -8,6 +8,9 @@ async function createCommunity(community){
 
 async function getAllCommunitys(){
     return await communityRep.find({
+        where:{
+            visibility: "public"
+        },
         relations:['users'] 
     })
 }
@@ -23,11 +26,20 @@ async function getCommunityByID(id){
 
 async function getUserCommunitys(userId){
     return await communityRep.find({
-        where:{
-            users:{
-                id: userId
-            }
-        }, 
+        where:[
+            {
+                users:{
+                    id: userId
+                },
+                visibility: "public"
+            },
+            {
+                users:{
+                    id: userId
+                },
+                visibility: "private"
+            },
+        ],  
         relations:['users'] 
 
     })
@@ -45,7 +57,8 @@ async function getCommunityByName(name){
 async function searchCommunity(text){
     return await communityRep.find({
         where:{
-            name: ILike(`%${text}%`)
+            name: ILike(`%${text}%`),
+            visibility: "public"
         }
     })
 }
