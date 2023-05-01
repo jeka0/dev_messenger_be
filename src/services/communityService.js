@@ -8,6 +8,7 @@ async function createCommunity(community){
           throw new Error("A community with the same name already exists");
         }
     }
+    community.users = JSON.parse(community.users)
 
     communityAccess.createCommunity(community);
  }
@@ -80,10 +81,14 @@ async function createCommunity(community){
         throw new Error("A community with the same name already exists");
       }
    }
+   data.users = JSON.parse(data.users)
 
    if(data.image)deleteFile(community.image);
 
-   return await communityAccess.updateCommunity(id, data);
+   const {users, ...updateData} = data;
+
+   await communityAccess.updateCommunity(id, updateData);
+   await communityAccess.createCommunity({id:community.id, users})
  }
 
  async function joinUser(id, userId){

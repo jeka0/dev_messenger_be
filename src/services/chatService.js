@@ -8,6 +8,7 @@ async function createChat(chat){
           throw new Error("A chat with the same name already exists");
         }
     }
+    if(chat.users)chat.users = JSON.parse(chat.users)
 
     return chatAccess.createChat(chat);
  }
@@ -80,10 +81,14 @@ async function createChat(chat){
         throw new Error("A chat with the same name already exists");
       }
    }
+   if(data.users)data.users = JSON.parse(data.users)
 
    if(data.image)deleteFile(chat.image);
 
-   return await chatAccess.updateChat(id, data);
+   const {users, ...updateData} = data;
+
+   await chatAccess.updateChat(id, updateData);
+   if(users)await chatAccess.createChat({id:chat.id, users})
  }
 
  async function joinUser(id, userId){

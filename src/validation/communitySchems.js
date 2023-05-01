@@ -11,6 +11,7 @@ const create = {
         name: Joi.string().required(),
         visibility: Joi.string().required(),
         image: Joi.string(),
+        users: Joi.string()
     })
 }
 
@@ -25,6 +26,7 @@ const update = {
         name: Joi.string(),
         visibility: Joi.string(),
         image: Joi.string(),
+        users: Joi.string()
     }).required().min(1),
 }
 
