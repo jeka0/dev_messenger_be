@@ -17,9 +17,9 @@ async function getAllCommunitys(req, res){
 }
 
 async function getUserCommunitys(req, res){
-    const userId = req.userId;
+    const { id } = req.params;
 
-    communityService.getUserCommunitys(userId)
+    communityService.getUserCommunitys(id)
     .then((communitys)=>res.send(communitys))
     .catch((err)=>res.status(400).send(err.message));
 }

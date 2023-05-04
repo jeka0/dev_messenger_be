@@ -17,9 +17,9 @@ async function getAllChats(req, res){
 }
 
 async function getUserChats(req, res){
-    const userId = req.userId;
+    const { id } = req.params;
 
-    chatService.getUserChats(userId)
+    chatService.getUserChats(id)
     .then((chat)=>res.send(chat))
     .catch((err)=>res.status(400).send(err.message));
 }
