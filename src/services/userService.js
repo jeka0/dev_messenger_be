@@ -8,8 +8,16 @@ async function createUser(user){
  }
  
  async function getAllUsers(){
-    return await userAccess.getAllUsers();
+    const users = await userAccess.getAllUsers();
+    users.map(user=>delete user.password);
+    return users;
  }
+
+ async function searchUser(email){
+  const users =  await userAccess.searchUser(email);
+  users.map(user=>delete user.password);
+  return users;
+}
  
  async function getUserByID(id){
     const user = await userAccess.getUserByID(id);
@@ -53,6 +61,7 @@ async function createUser(user){
  module.exports = {
      createUser,
      getAllUsers,
+     searchUser,
      getUserByID,
      getUserByEmail,
      deleteCurrentUser,

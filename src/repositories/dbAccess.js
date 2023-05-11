@@ -10,7 +10,12 @@ const AppDataSource = new typeorm.DataSource({
     synchronize: false,
     entities: [
         require("../entity/User.js"),
-        require("../entity/Post.js")
+        require("../entity/Post.js"),
+        require("../entity/Message.js"),
+        require("../entity/Chat.js"),
+        require("../entity/Community.js"),
+        require("../entity/Skill.js"),
+        require("../entity/Education.js")
     ],
     migrations: ["migration/**/*.js"],
     cli: {

@@ -6,19 +6,10 @@ const id = {
     })
 }
 
-const create = {
-    [Segments.BODY]: Joi.object().keys({
-        communityId: Joi.number().required(),
-        message: Joi.string(),
-        image: Joi.string().required()
-    }).required().min(1)
-}
-
 const update = {
     [Segments.BODY]: Joi.object().keys({
-        message: Joi.string(),
-        image: Joi.string()
-    }).required().min(1)
+        message: Joi.string().required()
+    })
 }
 
 const pagination = {
@@ -31,6 +22,5 @@ const pagination = {
 module.exports = { 
     id,
     update,
-    create,
     pagination
 }

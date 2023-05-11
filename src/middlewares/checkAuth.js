@@ -15,4 +15,20 @@ const checkAuth = (req, res, next) => {
     }
 }
 
-module.exports = checkAuth;
+const checkSocketAuth = (socket, next) => {
+    try {
+        const accesstoken = socket.handshake.auth.token.replace(/Bearer\s?/, '');
+        const decoded = jwt.verifyToken(accesstoken, accessTokenSecret);
+        socket.userId = decoded.id;
+
+        next();
+    } catch (err) {
+        console.log("AccessToken is not valid");
+        next(new Error("AccessToken is not valid"));
+    }
+}
+
+module.exports = {
+    checkAuth,
+    checkSocketAuth,
+};
